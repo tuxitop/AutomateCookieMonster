@@ -45,24 +45,46 @@ ACM.Config = {
 };
 
 ACM.State = {
-  loaded: 0,
+  started: 0,
   frame: 0,
   bestUpgrade: null,
   bestBldg: null,
   nextPurchase: null
 };
 
+/**
+ * Main Object
+ */
+
+ACM.Version = '2.019';
+ACM.VersionMinor = '1';
+
+ACM.Init = function() {
+  let proceed = true;
+  if (ACM.Version !== CM.VersionMajor) {
+    proceed = confirm('Automate CM is made for version ' + ACM.Version + ' of Cookie Monster. Are you sure you want to continue with version' + CM.VersionMajor + '?');
+  }
+  if (proceed) {
+    ACM.Start();
+  }
+};
+
 ACM.Start = function() {
-  if (!ACM.State.loaded) {
+  if (!ACM.State.started) {
     ACM.interval = setInterval(ACM.tick, ACM.Config.baseRate);
-    ACM.State.loaded = 1;
+    ACM.State.started = 1;
+    if (ACM.Version !== CM.VersionMajor) {
+      console.warn('AutomateCM version (' + ACM.Version + ') does not math with the Coockie Monster version (' + CM.VersionMajor + ').');
+    }
+    Game.Notify('Automate Coockie Monster', 'Started the automation script.', '', 5, 1);
   }
 };
 
 ACM.Stop = function() {
-  if (ACM.State.loaded) {
+  if (ACM.State.started) {
     clearInterval(ACM.interval);
-    ACM.State.loaded = 0;
+    ACM.State.started = 0;
+    Game.Notify('Automate Coockie Monster', 'Stopped the automation script.', '', 5, 1);
   }
 };
 
@@ -101,6 +123,10 @@ ACM.tick = function() {
     }
   }
 };
+
+/**
+ * Automation Functions
+ */
 
 ACM.Automate.autoClick = function() {
   Game.ClickCookie();
@@ -153,6 +179,10 @@ ACM.Automate.purchase = function() {
   }
 };
 
+/**
+ * Helpers
+ */
+
 ACM.Utils.getBestBldg = function () {
   for (let i in CM.Cache.Objects) { 
     if (CM.Cache.Objects[i].color === 'Green') { 
@@ -174,3 +204,5 @@ ACM.Utils.getBestUpgrade = function() {
   }
   return upg;
 };
+
+ACM.Init();
