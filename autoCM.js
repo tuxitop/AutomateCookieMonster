@@ -60,13 +60,18 @@ ACM.Version = '2.019';
 ACM.VersionMinor = '1';
 
 ACM.Init = function() {
-  let proceed = true;
-  if (ACM.Version !== CM.VersionMajor) {
-    proceed = confirm('Automate CM is made for version ' + ACM.Version + ' of Cookie Monster. Are you sure you want to continue with version' + CM.VersionMajor + '?');
-  }
-  if (proceed) {
-    ACM.Start();
-  }
+  let waitForCM = setInterval(function() {
+    if (typeof CM.Disp.lastBuyBulk !== 'undefined') {
+      let proceed = true;
+      if (ACM.Version !== CM.VersionMajor) {
+        proceed = confirm('Automate CM is made for version ' + ACM.Version + ' of Cookie Monster. Are you sure you want to continue with version' + CM.VersionMajor + '?');
+      }
+      if (proceed) {
+        ACM.Start();
+      }
+      clearInterval(waitForCM);
+    }
+  }, 500);
 };
 
 ACM.Start = function() {
