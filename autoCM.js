@@ -125,7 +125,7 @@ ACM.Automate.clickGolden = function() {
   });
 };
 
-Game.Automate.clickWrinlers = function() {
+ACM.Automate.clickWrinlers = function() {
   Game.wrinklers.forEach(function(wrinkler) {
     if (wrinkler.close) {
       wrinkler.hp--;
