@@ -39,8 +39,7 @@ ACM.Config = {
   autoBuyRate: 10,
   autoBuyUpgrades: 1,
   autoBuyUpgradePools: ['', 'cookie'],
-  autoBuyInterval: 1,
-  autoBuyConsiderLucky: 1,
+  autoBuyConsiderLucky: 0,
   autoBuyConsiderLuckyFrenzy: 0
 };
 
