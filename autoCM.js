@@ -166,10 +166,10 @@ ACM.Automate.clickWrinlers = function() {
 ACM.Automate.purchase = function() {
   let nextUpg = ACM.State.bestUpgrade;
   let nextBldg = ACM.State.bestBldg;
-  let purchase = nextUpg ? nextUpg : nextBldg;
+  let purchase = nextUpg || nextBldg;
   ACM.State.nextPurchase = purchase;
   let target = nextUpg ? 'Upgrades' : 'Objects';
-  let price = nextUpg ? Game[target][purchase].basePrice : Game[target][purchase].price;
+  let price = Game[target][purchase].getPrice();
   let availableCookies = Game.cookies;
   
   if (ACM.Config.autoBuyConsiderLuckyFrenzy) {
