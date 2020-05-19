@@ -157,7 +157,7 @@ ACM.Automate.clickGolden = function() {
 
 ACM.Automate.clickWrinlers = function() {
   Game.wrinklers.forEach(function(wrinkler) {
-    if (wrinkler.close) {
+    if (wrinkler.sucked) {
       wrinkler.hp--;
     }
   });
