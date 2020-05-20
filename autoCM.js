@@ -33,6 +33,7 @@ ACM.Config = {
   wrinklerClickRate: 10,
   clickGolden: 1,
   clickWrath: 0,
+  clickReindeer: 1,
   dismissWrath: 1,
   clickGoldenRate: 25,
   autoBuy: 1,
@@ -103,7 +104,7 @@ ACM.tick = function() {
   }
 
   // Auto Click Golden/Wrath Cookies
-  if (ACM.Config.clickGolden || ACM.Config.clickWrath || ACM.Config.dismissWrath) {
+  if (ACM.Config.clickGolden || ACM.Config.clickWrath || ACM.Config.dismissWrath || ACM.Config.clickReindeer) {
     if (!(ACM.State.frame % ACM.Config.clickGoldenRate)) {
       ACM.Automate.clickGolden();
     }
@@ -138,19 +139,24 @@ ACM.Automate.autoClick = function() {
 
 ACM.Automate.clickGolden = function() {
   Game.shimmers.forEach(function(shimmer) {
-    switch(shimmer.wrath) {
-      case 0:
-        if (ACM.Config.clickGolden) {
-          shimmer.pop();
-        }
-        break;
-      case 1:
-        if (ACM.Config.dismissWrath) {
-          shimmer.life = 0;
-        } else if (ACM.Config.clickWrath) {
-          shimmer.pop();
-        }
-        break;
+    if (ACM.Config.dismissWrath && shimmer.wrath) {
+      shimmer.life = 0;
+      continue;
+    }
+
+    if (ACM.Config.clickWrath && shimmer.wrath)  {
+      shimmer.pop();
+      continue;
+    }
+
+    if (ACM.Config.clickGolden && shimmer.type == 'golden') {
+      shimmer.pop();
+      continue;
+    }
+
+    if (ACM.Config.clickReindeer && shimmer.type == 'reindeer') {
+      shimmer.pop();
+      continue;
     }
   });
 };
