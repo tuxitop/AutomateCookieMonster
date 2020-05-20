@@ -141,22 +141,22 @@ ACM.Automate.clickGolden = function() {
   Game.shimmers.forEach(function(shimmer) {
     if (ACM.Config.dismissWrath && shimmer.wrath) {
       shimmer.life = 0;
-      continue;
+      return;
     }
 
     if (ACM.Config.clickWrath && shimmer.wrath)  {
       shimmer.pop();
-      continue;
+      return;
     }
 
     if (ACM.Config.clickGolden && shimmer.type == 'golden') {
       shimmer.pop();
-      continue;
+      return;
     }
 
     if (ACM.Config.clickReindeer && shimmer.type == 'reindeer') {
       shimmer.pop();
-      continue;
+      return;
     }
   });
 };
