@@ -175,7 +175,7 @@ ACM.Automate.purchase = function() {
   let purchase = nextUpg || nextBldg || 'Cursor';
   ACM.State.nextPurchase = purchase;
   let target = nextUpg ? 'Upgrades' : 'Objects';
-  let price = Game[target][purchase].getPrice();
+  let price = Game[target][purchase].getPrice(1);
   let availableCookies = Game.cookies;
   
   if (ACM.Config.autoBuyConsiderLuckyFrenzy) {
@@ -185,7 +185,7 @@ ACM.Automate.purchase = function() {
   }
 
   if (availableCookies > price) {
-    Game[target][purchase].buy();
+    Game[target][purchase].buy(1);
   }
 };
 
